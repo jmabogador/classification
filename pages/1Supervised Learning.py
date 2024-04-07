@@ -30,11 +30,6 @@ def app():
     The "Animal Condition Classification Dataset" presents a unique and intricate data challenge in the realm of animal health assessment.
     Featuring a diverse array of animal species, ranging from birds to mammals, this dataset enables the development of predictive models
     to determine whether an animal's condition is dangerous or not based on five distinct symptoms.
-    Each flower is described by four features:
-    * Sepal length (cm)
-    * Sepal width (cm)
-    * Petal length (cm)
-    * Petal width (cm)
     \n**KNN Classification with Animal Condition:**
     \n1. **Training:**
     * The KNN algorithm stores the entire Animal Condition dataset (features and labels) as its training data.
@@ -65,13 +60,13 @@ def app():
 
     if st.button("Begin"):
         # Load the Animal Condition dataset
-        penguin = pd.read_csv('animalcondition.csv')
-        st.write(penguin.head())
+        animal = pd.read_csv('animalcondition.csv')
+        st.write(animal.head())
         st.write('Shape of the dataset:', animalcondition.shape)
 
         # Prepare the features (X) and target variable (y)
-        X = penguin[['Culmen Length (mm)', 'Culmen Depth (mm)', 'Flipper Length (mm)', 'Body Mass (g)']]
-        y = penguin['Species']
+        X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5', 'Dangerous']]
+        y = animal['AnimalName']
 
         # KNN for supervised classification (reference for comparison)
 
