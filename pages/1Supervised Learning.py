@@ -66,6 +66,9 @@ def app():
 
         st.write('Column Names:', animal.columns.tolist())
 
+        # Convert target variable to numerical values
+        animal['Dangerous'] = animal['Dangerous'].map({'yes': 1, 'no': 0})
+
         # Prepare the features (X) and target variable (y)
         X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5']]
         y = animal['Dangerous']
