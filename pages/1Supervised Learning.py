@@ -14,7 +14,7 @@ import time
 # Define the Streamlit app
 def app():
 
-    st.subheader('Supervised Learning, Classification, and KNN with Iris Dataset')
+    st.subheader('Supervised Learning, Classification, and KNN with Animal Condition Dataset')
     text = """**Supervised Learning:**
     \nSupervised learning is a branch of machine learning where algorithms learn from labeled data. 
     This data consists of input features (X) and corresponding outputs or labels (y). The algorithm learns a 
@@ -26,25 +26,26 @@ def app():
     point based on its features.
     \n**K-Nearest Neighbors (KNN):**
     KNN is a simple yet powerful algorithm for both classification and regression tasks. 
-    \n**The Iris Dataset:**
-    The Iris dataset is a popular benchmark dataset in machine learning. It contains information about 150 
-    iris flowers from three different species: Iris Setosa, Iris Versicolor, and Iris Virginica. 
+    \n**The Animal Condition Dataset:**
+    The "Animal Condition Classification Dataset" presents a unique and intricate data challenge in the realm of animal health assessment.
+    Featuring a diverse array of animal species, ranging from birds to mammals, this dataset enables the development of predictive models
+    to determine whether an animal's condition is dangerous or not based on five distinct symptoms.
     Each flower is described by four features:
     * Sepal length (cm)
     * Sepal width (cm)
     * Petal length (cm)
     * Petal width (cm)
-    \n**KNN Classification with Iris:**
+    \n**KNN Classification with Animal Condition:**
     \n1. **Training:**
-    * The KNN algorithm stores the entire Iris dataset (features and labels) as its training data.
+    * The KNN algorithm stores the entire Animal Condition dataset (features and labels) as its training data.
     \n2. **Prediction:**
-    * When presented with a new iris flower (unknown species), KNN calculates the distance (often Euclidean distance) 
-    between this flower's features and all the flowers in the training data.
+    * When presented with a new animal condition, KNN calculates the distance (often Euclidean distance) 
+    between this animal's condition and all the conditions in the training data.
     * The user defines the value of 'k' (number of nearest neighbors). KNN identifies the 'k' closest 
-    data points (flowers) in the training set to the new flower.
-    * KNN predicts the class label (species) for the new flower based on the majority vote among its 
-    'k' nearest neighbors. For example, if three out of the five nearest neighbors belong to Iris Setosa, 
-    the new flower is classified as Iris Setosa.
+    data points (conditions) in the training set to the new flower.
+    * KNN predicts the class label for the new condition based on the majority vote among its 
+    'k' nearest neighbors. For example, if three out of the five nearest neighbors belong to symtopms 1, 
+    the new condition is classified as symptoms 1.
     **Choosing 'k':**
     The value of 'k' significantly impacts KNN performance. A small 'k' value might lead to overfitting, where the 
     model performs well on the training data but poorly on unseen data. Conversely, a large 'k' value might not 
@@ -63,10 +64,14 @@ def app():
     )
 
     if st.button("Begin"):
-        # Load the Iris dataset
-        iris = datasets.load_iris()
-        X = iris.data  # Features
-        y = iris.target  # Target labels (species)
+        # Load the Animal Condition dataset
+        penguin = pd.read_csv('animalcondition.csv')
+        st.write(penguin.head())
+        st.write('Shape of the dataset:', animalcondition.shape)
+
+        # Prepare the features (X) and target variable (y)
+        X = penguin[['Culmen Length (mm)', 'Culmen Depth (mm)', 'Flipper Length (mm)', 'Body Mass (g)']]
+        y = penguin['Species']
 
         # KNN for supervised classification (reference for comparison)
 
