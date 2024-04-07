@@ -68,7 +68,7 @@ def app():
 
         # Prepare the features (X) and target variable (y)
         X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5']]
-        y = animal['AnimalName']
+        y = animal['Dangerous']
 
         # KNN for supervised classification (reference for comparison)
 
