@@ -64,9 +64,11 @@ def app():
         st.write(animal.head())
         st.write('Shape of the dataset:', animal.shape)
 
+        st.write('Column Names:', animal.columns.tolist())
+
         # Prepare the features (X) and target variable (y)
         X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5']]
-        y = animal['Condition']
+        y = animal['AnimalName']
 
         # KNN for supervised classification (reference for comparison)
 
