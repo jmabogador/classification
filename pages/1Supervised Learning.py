@@ -72,10 +72,10 @@ def app():
 
         X.fillna(X.mean(), inplace=True)
 
-        # Check for missing values
-        missing_values = X.isnull().sum().sum() + y.isnull().sum()
-        if missing_values > 0:
-            st.error("Missing values detected in the dataset. Please handle them before proceeding.")
+        # Check if there are still any missing values
+        missing_values_after_imputation = X.isnull().sum().sum()
+        if missing_values_after_imputation > 0:
+            st.error("Missing values still exist in the dataset after imputation. Please handle them before proceeding.")
             return
 
         # Convert target variable to numerical values
