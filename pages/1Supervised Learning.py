@@ -67,21 +67,6 @@ def app():
         X = audit_risk[['Sector_score', 'PARA_A', 'Score_A', 'Risk_A', 'PARA_B', 'Score_B', 'Risk_B', 'TOTAL', 'numbers']]
         y = audit_risk['Risk']
 
-        X.fillna(X.mean(), inplace=True)
-
-        # Check if there are still any missing values
-        missing_values_after_imputation = X.isnull().sum().sum()
-        if missing_values_after_imputation > 0:
-            st.error("Missing values still exist in the dataset after imputation. Please handle them before proceeding.")
-            return
-
-        # Convert target variable to numerical values
-        y = y.map({'Low': 0, 'Medium': 1, 'High': 2})
-
-        # Check the data types
-        st.write(X.dtypes)
-        st.write(y.dtypes)
-
         # KNN for supervised classification (reference for comparison)
 
         # Define the KNN classifier with k=5 neighbors
