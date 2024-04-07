@@ -1,4 +1,4 @@
-#Input the relevant libraries
+# Input the relevant libraries
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -14,7 +14,7 @@ import time
 # Define the Streamlit app
 def app():
 
-    st.subheader('Supervised Learning, Classification, and KNN with Animal Condition Dataset')
+    st.subheader('Supervised Learning, Classification, and KNN with Audit Risk Dataset')
     text = """**Supervised Learning:**
     \nSupervised learning is a branch of machine learning where algorithms learn from labeled data. 
     This data consists of input features (X) and corresponding outputs or labels (y). The algorithm learns a 
@@ -25,23 +25,20 @@ def app():
     categories. The goal is to build a model that can predict the category label of a new data 
     point based on its features.
     \n**K-Nearest Neighbors (KNN):**
-    KNN is a simple yet powerful algorithm for both classification and regression tasks. 
-    \n**The Animal Condition Dataset:**
-    The "Animal Condition Classification Dataset" presents a unique and intricate data challenge in the realm of animal health assessment.
-    Featuring a diverse array of animal species, ranging from birds to mammals, this dataset enables the development of predictive models
-    to determine whether an animal's condition is dangerous or not based on five distinct symptoms.
-    \n**KNN Classification with Animal Condition:**
+    KNN is a simple yet powerful algorithm for both classification and regression tasks.
+    \n**The Audit Risk Dataset:**
+    The "Audit Risk Dataset" provides information about different firms and their audit risk. It consists of various features such as sector score, historical risk scores, discrepancy amounts, and more.
+    \n**KNN Classification with Audit Risk:**
     \n1. **Training:**
-    * The KNN algorithm stores the entire Animal Condition dataset (features and labels) as its training data.
+    * The KNN algorithm stores the entire Audit Risk dataset (features and labels) as its training data.
     \n2. **Prediction:**
-    * When presented with a new animal condition, KNN calculates the distance (often Euclidean distance) 
-    between this animal's condition and all the conditions in the training data.
+    * When presented with new firm data, KNN calculates the distance (often Euclidean distance) 
+    between this firm's features and all the features in the training data.
     * The user defines the value of 'k' (number of nearest neighbors). KNN identifies the 'k' closest 
-    data points (conditions) in the training set to the new flower.
-    * KNN predicts the class label for the new condition based on the majority vote among its 
-    'k' nearest neighbors. For example, if three out of the five nearest neighbors belong to symtopms 1, 
-    the new condition is classified as symptoms 1.
-    **Choosing 'k':**
+    data points (firms) in the training set to the new firm.
+    * KNN predicts the class label for the new firm based on the majority vote among its 
+    'k' nearest neighbors.
+    \n**Choosing 'k':**
     The value of 'k' significantly impacts KNN performance. A small 'k' value might lead to overfitting, where the 
     model performs well on the training data but poorly on unseen data. Conversely, a large 'k' value might not 
     capture the local patterns in the data and lead to underfitting. The optimal 'k' value is often determined 
@@ -59,16 +56,16 @@ def app():
     )
 
     if st.button("Begin"):
-        # Load the Animal Condition dataset
-        animal = pd.read_csv('animalcondition.csv')
-        st.write(animal.head())
-        st.write('Shape of the dataset:', animal.shape)
+        # Load the Audit Risk dataset
+        audit_risk = pd.read_csv('audit_risk_dataset.csv')
+        st.write(audit_risk.head())
+        st.write('Shape of the dataset:', audit_risk.shape)
 
-        st.write('Column Names:', animal.columns.tolist())
+        st.write('Column Names:', audit_risk.columns.tolist())
 
         # Prepare the features (X) and target variable (y)
-        X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5']]
-        y = animal['Dangerous']
+        X = audit_risk[['Sector_score', 'PARA_A', 'Score_A', 'Risk_A', 'PARA_B', 'Score_B', 'Risk_B', 'TOTAL', 'numbers']]
+        y = audit_risk['Risk']
 
         X.fillna(X.mean(), inplace=True)
 
@@ -79,7 +76,7 @@ def app():
             return
 
         # Convert target variable to numerical values
-        y = y.map({'yes': 1, 'no': 0})
+        y = y.map({'Low': 0, 'Medium': 1, 'High': 2})
 
         # Check the data types
         st.write(X.dtypes)
@@ -112,12 +109,12 @@ def app():
         for label, color in zip(unique_labels, colors):
             indices = y_pred == label
             # Use ax.scatter for consistent plotting on the created axis
-            ax.scatter(X.loc[indices, 'symptoms1'], X.loc[indices, 'symptoms2'], label=label, c=color)
+            ax.scatter(X.loc[indices, 'Sector_score'], X.loc[indices, 'PARA_A'], label=label, c=color)
 
         # Add labels and title using ax methods
-        ax.set_xlabel('symptoms1')
-        ax.set_ylabel('symptoms2')
-        ax.set_title('symptoms1 vs symptoms2 by Predicted Animal Condition')
+        ax.set_xlabel('Sector_score')
+        ax.set_ylabel('PARA_A')
+        ax.set_title('Sector_score vs PARA_A by Predicted Risk Level')
 
         # Add legend and grid using ax methods
         ax.legend()
@@ -125,6 +122,6 @@ def app():
         st.pyplot(fig)
 
 
-#run the app
+# Run the app
 if __name__ == "__main__":
     app()
