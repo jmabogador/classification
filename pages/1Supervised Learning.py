@@ -70,6 +70,8 @@ def app():
         X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5']]
         y = animal['Dangerous']
 
+        X.fillna(X.mean(), inplace=True)
+
         # Check for missing values
         missing_values = X.isnull().sum().sum() + y.isnull().sum()
         if missing_values > 0:
