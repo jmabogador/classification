@@ -66,12 +66,22 @@ def app():
 
         st.write('Column Names:', animal.columns.tolist())
 
-        # Convert target variable to numerical values
-        animal['Dangerous'] = animal['Dangerous'].map({'yes': 1, 'no': 0})
-
         # Prepare the features (X) and target variable (y)
         X = animal[['symptoms1', 'symptoms2', 'symptoms3', 'symptoms4', 'symptoms5']]
         y = animal['Dangerous']
+
+        # Check for missing values
+        missing_values = X.isnull().sum().sum() + y.isnull().sum()
+        if missing_values > 0:
+            st.error("Missing values detected in the dataset. Please handle them before proceeding.")
+            return
+
+        # Convert target variable to numerical values
+        y = y.map({'yes': 1, 'no': 0})
+
+        # Check the data types
+        st.write(X.dtypes)
+        st.write(y.dtypes)
 
         # KNN for supervised classification (reference for comparison)
 
